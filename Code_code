@@ -1,0 +1,101 @@
+
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+// LCD address and dimensions
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+// Pin connections
+const int sensor1 = 2;
+const int sensor2 = 3;
+const int buzzer = 8;
+
+// Distance between sensors in metres
+const float distance = 0.5;
+
+// Speed limit in km/h
+const float speedLimit = 20.0;
+
+// Timing variables
+unsigned long startTime = 0;
+unsigned long endTime = 0;
+
+bool firstDetected = false;
+
+void setup() {
+  pinMode(sensor1, INPUT);
+  pinMode(sensor2, INPUT);
+  pinMode(buzzer, OUTPUT);
+
+  Serial.begin(9600);
+
+  lcd.init();
+  lcd.backlight();
+
+  lcd.setCursor(0, 0);
+  lcd.print("Speed Detector");
+  lcd.setCursor(0, 1);
+  lcd.print("System Ready");
+  delay(2000);
+  lcd.clear();
+}
+
+void loop() {
+  // Detect vehicle at the first sensor
+  if (digitalRead(sensor1) == LOW && !firstDetected) {
+    startTime = millis();
+    firstDetected = true;
+    delay(100);
+  }
+
+  // Detect vehicle at the second sensor
+  if (digitalRead(sensor2) == LOW && firstDetected) {
+    endTime = millis();
+
+    unsigned long elapsedTime = endTime - startTime;
+
+    if (elapsedTime > 0) {
+      float timeSeconds = elapsedTime / 1000.0;
+
+      // Calculate speed in m/s and km/h
+      float speedMS = distance / timeSeconds;
+      float speedKMPH = speedMS * 3.6;
+
+      // Display speed on LCD
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("Speed: ");
+      lcd.print(speedKMPH, 1);
+      lcd.print(" km/h");
+
+      Serial.print("Speed: ");
+      Serial.print(speedKMPH, 1);
+      Serial.println(" km/h");
+
+      // Activate buzzer if speed exceeds limit
+      if (speedKMPH > speedLimit) {
+        digitalWrite(buzzer, HIGH);
+        lcd.setCursor(0, 1);
+        lcd.print("OVER SPEED!");
+        delay(1000);
+        digitalWrite(buzzer, LOW);
+      } else {
+        lcd.setCursor(0, 1);
+        lcd.print("Normal Speed");
+      }
+    }
+
+    // Reset for the next measurement
+    firstDetected = false;
+
+    // Wait until the second sensor is clear
+    while (digitalRead(sensor2) == LOW) {
+      delay(10);
+    }
+
+    lcd.setCursor(0, 1);
+    lcd.print("Ready for next");
+    delay(500);
+    lcd.clear();
+  }
+}
