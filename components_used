@@ -1,0 +1,11 @@
+## 🧰 Components Used
+
+The following hardware components are used to develop the Arduino-based vehicle speed detection system:
+
+- **Arduino UNO** – Processes sensor data and calculates vehicle speed.
+- **IR Sensors (2)** – Detect the vehicle at two fixed points.
+- **16×2 LCD Display with I2C Module** – Displays the measured speed.
+- **Buzzer** – Provides an alert when the speed exceeds the predefined limit.
+- **Breadboard** – Used to assemble and test the circuit.
+- **Jumper Wires** – Connect the components to the Arduino UNO.
+- **USB Cable / Power Supply** – Supplies power to the Arduino.
