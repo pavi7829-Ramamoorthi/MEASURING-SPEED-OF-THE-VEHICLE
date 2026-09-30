@@ -1,0 +1,21 @@
+## ⚙️ Working Principle
+
+The Arduino-based vehicle speed detection system works using two IR sensors placed at a fixed distance apart.
+
+1. **Vehicle Detection:** When a vehicle crosses the first IR sensor, the Arduino records the starting time using `millis()`.
+
+2. **Time Measurement:** When the vehicle crosses the second IR sensor, the Arduino records the ending time and calculates the time taken to travel between the sensors.
+
+3. **Speed Calculation:** The Arduino calculates the vehicle's speed using the formula:
+
+   **Speed = Distance / Time**
+
+   The speed is then converted from metres per second (m/s) to kilometres per hour (km/h).
+
+4. **LCD Display:** The calculated speed is displayed on the 16×2 LCD with an I2C module.
+
+5. **Overspeed Alert:** The Arduino compares the measured speed with a predefined speed limit. If the speed exceeds the limit, the buzzer sounds and the LCD displays an overspeed warning.
+
+6. **System Reset:** After each measurement, the system resets the detection status and waits for the next vehicle.
+
+This project demonstrates the practical application of sensors, microcontrollers, and embedded systems in vehicle speed monitoring and traffic safety.
