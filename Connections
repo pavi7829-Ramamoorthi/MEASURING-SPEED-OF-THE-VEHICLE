@@ -1,0 +1,40 @@
+## 🔌 Circuit Connections
+
+The following connections are used to interface the Arduino UNO with the IR sensors, LCD display, and buzzer.
+
+### 1. IR Sensors to Arduino UNO
+
+| IR Sensor Pin     | Arduino UNO Pin |
+| ----------------- | --------------- |
+| First sensor VCC  | 5V              |
+| First sensor GND  | GND             |
+| First sensor OUT  | Digital Pin 2   |
+| Second sensor VCC | 5V              |
+| Second sensor GND | GND             |
+| Second sensor OUT | Digital Pin 3   |
+
+### 2. 16×2 LCD with I2C Module
+
+| LCD I2C Pin | Arduino UNO Pin |
+| ----------- | --------------- |
+| VCC         | 5V              |
+| GND         | GND             |
+| SDA         | A4              |
+| SCL         | A5              |
+
+### 3. Buzzer to Arduino UNO
+
+| Buzzer Pin   | Arduino UNO Pin |
+| ------------ | --------------- |
+| Positive (+) | Digital Pin 8   |
+| Negative (−) | GND             |
+
+### 4. Power Supply
+
+* Connect the Arduino UNO to a computer using a USB cable.
+* The USB connection supplies power to the Arduino and the circuit.
+* Ensure all components share a common GND.
+
+### ⚠️ Important Note
+
+The pin numbers listed above are example connections. Make sure they match the pin assignments in your Arduino code and your actual circuit before uploading the program.
